@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roadmap — Operação Vasto 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #0d0d0d;
+    --surface: #1a1a1a;
+    --border: #2a2a2a;
+    --text: #f0f0f0;
+    --muted: #707070;
+    --brand: #FFB800;
+    --brand-dim: rgba(255,184,0,0.10);
+    --brand-border: rgba(255,184,0,0.30);
+    --fase0: #4ade80;
+    --fase1: #f87171;
+    --fase2: #fb923c;
+    --fase3: #60a5fa;
+    --fase4: #a78bfa;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    text-align: center;
+    padding: 60px 20px 40px;
+    position: relative;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 600px; height: 300px;
+    background: radial-gradient(ellipse, rgba(245,184,0,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: var(--brand-dim);
+    border: 1px solid var(--brand-border);
+    color: var(--brand);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 100px;
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-size: clamp(30px, 5vw, 54px);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 12px;
+    letter-spacing: -1.5px;
+  }
+  .hero h1 span { color: var(--brand); }
+
+  /* ── SECTION LABEL (padrão "POR QUE VASTO") ── */
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--brand);
+    margin-bottom: 10px;
+    display: block;
+  }
+  .hero p {
+    color: var(--muted);
+    font-size: 16px;
+    max-width: 560px;
+    margin: 0 auto 32px;
+    line-height: 1.6;
+  }
+  .hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  .hero-stat { text-align: center; }
+  .hero-stat .val {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--brand);
+    display: block;
+  }
+  .hero-stat .label {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* ── PROBLEMA TRACKER ── */
+  .tracker-section {
+    max-width: 1100px;
+    margin: 0 auto 60px;
+    padding: 0 20px;
+  }
+  .tracker-title {
+    text-align: center;
+    font-size: 13px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .tracker-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+  }
+  .tracker-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s;
+    cursor: default;
+  }
+  .tracker-item.resolved {
+    border-color: rgba(74,222,128,0.3);
+    background: rgba(74,222,128,0.05);
+  }
+  .tracker-item.active-phase {
+    border-color: rgba(251,146,60,0.4);
+    background: rgba(251,146,60,0.07);
+    animation: pulse-border 2s infinite;
+  }
+  @keyframes pulse-border {
+    0%, 100% { border-color: rgba(251,146,60,0.4); }
+    50% { border-color: rgba(251,146,60,0.8); }
+  }
+  .tracker-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .tracker-item.resolved .tracker-dot { background: #4ade80; }
+  .tracker-item.active-phase .tracker-dot { background: #fb923c; }
+  .tracker-item:not(.resolved):not(.active-phase) .tracker-dot { background: var(--muted); }
+  .tracker-text { font-size: 12px; color: var(--text); line-height: 1.4; }
+  .tracker-phase {
+    margin-left: auto;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 100px;
+    flex-shrink: 0;
+  }
+
+  /* ── ROADMAP ── */
+  .roadmap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px 80px;
+    position: relative;
+  }
+  .roadmap-line {
+    position: absolute;
+    left: 50%;
+    top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--brand), rgba(255,184,0,0.15));
+    transform: translateX(-50%);
+    opacity: 0.5;
+  }
+
+  /* ── FASE CARD ── */
+  .fase {
+    display: grid;
+    grid-template-columns: 1fr 60px 1fr;
+    gap: 0;
+    margin-bottom: 12px;
+    position: relative;
+    align-items: start;
+  }
+  .fase:nth-child(even) .fase-content { grid-column: 3; }
+  .fase:nth-child(even) .fase-spacer { grid-column: 2; }
+  .fase:nth-child(even) .fase-empty { grid-column: 1; }
+  .fase:nth-child(odd) .fase-content { grid-column: 1; }
+  .fase:nth-child(odd) .fase-spacer { grid-column: 2; }
+  .fase:nth-child(odd) .fase-empty { grid-column: 3; }
+
+  .fase-spacer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 28px;
+    position: relative;
+    z-index: 2;
+  }
+  .fase-node {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    border: 2px solid;
+    background: var(--bg);
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  .fase-node:hover { transform: scale(1.15); }
+
+  .fase-content {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+  }
+  .fase-content:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+  }
+  .fase-content.open { border-color: transparent; }
+
+  .fase-header {
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .fase-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .fase-tag {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 100px;
+    border: 1px solid;
+  }
+  .fase-timeline {
+    font-size: 11px;
+    color: var(--muted);
+  }
+  .fase-status {
+    margin-left: auto;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 100px;
+  }
+  .status-done { background: rgba(74,222,128,0.1); color: #4ade80; }
+  .status-next { background: rgba(251,146,60,0.1); color: #fb923c; }
+  .status-waiting { background: rgba(107,107,138,0.15); color: var(--muted); }
+
+  .fase-title {
+    font-size: 22px;
+    font-weight: 900;
+    line-height: 1.2;
+  }
+  .fase-subtitle {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+    font-style: italic;
+  }
+
+  /* Analogia criança */
+  .fase-kid {
+    margin: 0 24px;
+    padding: 12px 16px;
+    background: rgba(255,255,255,0.03);
+    border-left: 3px solid;
+    border-radius: 0 8px 8px 0;
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .fase-kid strong { color: var(--text); }
+
+  /* Resolve badges */
+  .fase-resolves {
+    padding: 14px 24px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+  }
+  .resolves-label {
+    font-size: 10px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-right: 4px;
+  }
+  .resolve-badge {
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 100px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: var(--muted);
+  }
+
+  /* Expandable details */
+  .fase-details {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.6s cubic-bezier(0.4,0,0.2,1);
+  }
+  .fase-details.open { max-height: 2400px; }
+
+  .fase-details-inner {
+    padding: 0 24px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .detail-block {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+  }
+  .detail-block h4 {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 10px;
+    opacity: 0.7;
+  }
+  .detail-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+  .detail-list li {
+    font-size: 13px;
+    color: var(--muted);
+    display: flex;
+    gap: 8px;
+    line-height: 1.4;
+  }
+  .detail-list li::before { content: '→'; opacity: 0.5; flex-shrink: 0; }
+  .detail-list li strong { color: var(--text); }
+
+  .kpi-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .kpi-chip {
+    font-size: 12px;
+    padding: 5px 12px;
+    border-radius: 8px;
+    border: 1px solid;
+    font-weight: 600;
+  }
+  .kpi-green { border-color: rgba(74,222,128,0.3); color: #4ade80; background: rgba(74,222,128,0.05); }
+  .kpi-orange { border-color: rgba(251,146,60,0.3); color: #fb923c; background: rgba(251,146,60,0.05); }
+  .kpi-blue { border-color: rgba(96,165,250,0.3); color: #60a5fa; background: rgba(96,165,250,0.05); }
+
+  .chevron {
+    position: absolute;
+    bottom: 14px;
+    right: 20px;
+    color: var(--muted);
+    font-size: 12px;
+    transition: transform 0.3s;
+  }
+  .fase-content.open .chevron { transform: rotate(180deg); }
+
+  /* Budget section */
+  .budget-section {
+    max-width: 1100px;
+    margin: 0 auto 60px;
+    padding: 0 20px;
+  }
+  .budget-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 32px;
+  }
+  .budget-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .budget-header h3 {
+    font-size: 18px;
+    font-weight: 700;
+  }
+  .budget-total {
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--brand);
+  }
+  .budget-bar-wrap { margin-bottom: 20px; }
+  .budget-bar {
+    height: 12px;
+    border-radius: 100px;
+    background: var(--border);
+    display: flex;
+    overflow: hidden;
+    gap: 2px;
+    margin-bottom: 12px;
+  }
+  .budget-bar-seg { border-radius: 2px; transition: all 0.3s; }
+  .budget-legend {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 10px;
+  }
+  .budget-leg-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+  }
+  .budget-leg-dot { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
+  .budget-leg-val { margin-left: auto; font-weight: 700; color: var(--text); }
+
+  /* Responsivo */
+  @media (max-width: 720px) {
+    .roadmap-line { display: none; }
+    .fase {
+      grid-template-columns: 1fr;
+    }
+    .fase-spacer, .fase-empty { display: none; }
+    .fase:nth-child(even) .fase-content,
+    .fase:nth-child(odd) .fase-content {
+      grid-column: 1;
+    }
+    .hero-stats { gap: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">🎯 Operação Vasto 2026</div>
+  <h1>Da Base ao Acabamento:<br><span>A rota estratégica da Vasto</span></h1>
+  <p>4 Passos que transformam +R$500 mil gastos sem rastreamento efetivo em uma operação que aprende, entende e executa.</p>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <span class="val">R$572K</span>
+      <span class="label">investidos sem rastreamento</span>
+    </div>
+    <div class="hero-stat">
+      <span class="val">R$30K</span>
+      <span class="label">budget mensal novo</span>
+    </div>
+    <div class="hero-stat">
+      <span class="val">8</span>
+      <span class="label">problemas no roadmap</span>
+    </div>
+    <div class="hero-stat">
+      <span class="val">4</span>
+      <span class="label">passos de resolução</span>
+    </div>
+  </div>
+</section>
+
+<!-- TRACKER DE PROBLEMAS -->
+<section class="tracker-section">
+  <span class="section-label" style="text-align:center;display:block">diagnóstico</span>
+  <p class="tracker-title">Rastreador de problemas: o que cada passo resolve</p>
+  <div class="tracker-grid">
+    <div class="tracker-item" data-fase="1">
+      <div class="tracker-dot"></div>
+      <div class="tracker-text">Sem rastreamento UTM + KOMMO</div>
+      <div class="tracker-phase" style="background:rgba(248,113,113,0.1);color:#f87171">P.1</div>
+    </div>
+    <div class="tracker-item" data-fase="1">
+      <div class="tracker-dot"></div>
+      <div class="tracker-text">Follow-up morto (caso R$100K)</div>
+      <div class="tracker-phase" style="background:rgba(248,113,113,0.1);color:#f87171">P.1</div>
+    </div>
+    <div class="tracker-item" data-fase="1">
+      <div class="tracker-dot"></div>
+      <div class="tracker-text">Desconexão Marketing e Comercial</div>
+      <div class="tracker-phase" style="background:rgba(248,113,113,0.1);color:#f87171">P.1</div>
+    </div>
+    <div class="tracker-item" data-fase="1">
+      <div class="tracker-dot"></div>
+      <div class="tracker-text">Dashboard: liderança sem visão de ROI</div>
+      <div class="tracker-phase" style="background:rgba(248,113,113,0.1);color:#f87171">P.1→2</div>
+    </div>
+    <div class="tracker-item" data-fase="2">
+      <div class="tracker-dot"></div>
+      <div class="tracker-text">Qualidade dos leads</div>
+      <div class="tracker-phase" style="background:rgba(251,146,60,0.1);color:#fb923c">P.2</div>
+    </div>
+    <div class="tracker-item" data-fase="3">
+      <div class="tracker-dot"></div>
+      <div class="tracker-text">Landing page: clique sem lead</div>
+      <div class="tracker-phase" style="background:rgba(96,165,250,0.1);color:#60a5fa">P.3</div>
+    </div>
+    <div class="tracker-item" data-fase="3">
+      <div class="tracker-dot"></div>
+      <div class="tracker-text">Google Ads inexistente</div>
+      <div class="tracker-phase" style="background:rgba(96,165,250,0.1);color:#60a5fa">P.3</div>
+    </div>
+    <div class="tracker-item" data-fase="4">
+      <div class="tracker-dot"></div>
+      <div class="tracker-text">Reconhecimento de marca na Zona Sul</div>
+      <div class="tracker-phase" style="background:rgba(167,139,250,0.1);color:#a78bfa">P.4</div>
+    </div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section class="roadmap">
+  <div class="roadmap-line"></div>
+
+  <!-- PASSO 1 -->
+  <div class="fase">
+    <div class="fase-empty"></div>
+    <div class="fase-spacer">
+      <div class="fase-node" style="border-color:var(--fase1);color:var(--fase1)">👁</div>
+    </div>
+    <div class="fase-content" onclick="toggle(this)" style="">
+      <div class="fase-header">
+        <div class="fase-meta">
+          <div class="fase-tag" style="border-color:var(--fase1);color:var(--fase1)">Passo 1</div>
+          <div class="fase-timeline">Semana 1 e 2</div>
+          <div class="fase-status status-next">Próximo</div>
+        </div>
+        <div class="fase-title">👁️ Coloque olhos na operação</div>
+        <div class="fase-subtitle">Sem rastreamento, você está dirigindo no escuro. Todo investimento dos próximos passos depende disso estar funcionando primeiro.</div>
+      </div>
+      <div class="fase-kid" style="border-color:var(--fase1)">
+        <strong>🧒 Como uma criança entenderia:</strong> Imagina que você é um detetive. Antes de sair investigando, você precisa colocar câmeras em todos os lugares para saber quem fez o quê. Esse passo instala as câmeras.
+      </div>
+      <div class="fase-resolves">
+        <span class="resolves-label">Resolve</span>
+        <span class="resolve-badge">Sem rastreamento</span>
+        <span class="resolve-badge">Follow-up morto</span>
+        <span class="resolve-badge">Marketing e Comercial desconectados</span>
+        <span class="resolve-badge">Dashboard (estrutura)</span>
+      </div>
+      <div class="fase-details">
+        <div class="fase-details-inner">
+          <div class="detail-block">
+            <h4>🔗 UTM + WhatsApp: cada lead com origem identificada</h4>
+            <ul class="detail-list">
+              <li>Cada campanha recebe um código único: <strong>VASTO-MR01, VASTO-MD01, VASTO-GS01</strong></li>
+              <li>Link do WhatsApp chega com o código na mensagem e o KOMMO identifica automaticamente</li>
+              <li>Automação: mensagem contém VASTO-MR, etiqueta Meta Pago · Reformadora</li>
+              <li>Sem esse passo cada lead novo é um mistério. Com ele a origem fica rastreada em 100%</li>
+            </ul>
+          </div>
+          <div class="detail-block">
+            <h4>📋 KOMMO: pipeline e protocolo comercial</h4>
+            <ul class="detail-list">
+              <li>6 estágios: <strong>Novo, Atendimento, Qualificado, Proposta, Showroom, Venda</strong></li>
+              <li>Protocolo A/B/C/D: lead A responde em menos de 5 min. Lead B em 24h. Lead C entra em nutrição.</li>
+              <li>Anamnese de 5 perguntas obrigatória, incluindo "como ficou sabendo da Vasto?"</li>
+              <li>Essa pergunta valida o rastreamento. Onde divergir, investigar.</li>
+            </ul>
+          </div>
+          <div class="detail-block">
+            <h4>📊 CAPI + Dashboard: Meta aprende, Rafael enxerga</h4>
+            <ul class="detail-list">
+              <li>CAPI envia eventos reais para o Meta: Lead, LeadQualificado e Purchase com valor real</li>
+              <li>O algoritmo para de otimizar para curiosos e começa a otimizar para quem compra</li>
+              <li>Dashboard Google Sheets atualizado toda segunda: investimento, leads, qualificados, propostas e vendas</li>
+              <li>Reunião semanal fixa Rafael + Beatriz + Isley com os números na tela</li>
+            </ul>
+          </div>
+          <div class="kpi-row">
+            <div class="kpi-chip kpi-orange">UTM em 100% dos leads</div>
+            <div class="kpi-chip kpi-orange">Pipeline KOMMO ativo</div>
+            <div class="kpi-chip kpi-orange">CAPI match rate ≥ 70%</div>
+            <div class="kpi-chip kpi-orange">Resposta A em menos de 5min</div>
+          </div>
+          <div style="padding:10px;background:rgba(248,113,113,0.05);border:1px solid rgba(248,113,113,0.2);border-radius:8px;font-size:12px;color:#f87171;">
+            ⚠️ <strong>Regra sênior:</strong> Nada é lançado nos próximos passos enquanto essa fundação não estiver validada. Escalar sem rastreamento é repetir os R$572K.
+          </div>
+        </div>
+      </div>
+      <div class="chevron">▼</div>
+    </div>
+  </div>
+
+  <!-- PASSO 2 -->
+  <div class="fase">
+    <div class="fase-content" onclick="toggle(this)">
+      <div class="fase-header">
+        <div class="fase-meta">
+          <div class="fase-tag" style="border-color:var(--fase2);color:var(--fase2)">Passo 2</div>
+          <div class="fase-timeline">Semana 2 e 3</div>
+          <div class="fase-status status-waiting">Aguardando P.1</div>
+        </div>
+        <div class="fase-title">🚀 Ligue o motor do jeito certo</div>
+        <div class="fase-subtitle">A mesma audiência que deu CPL R$4,07 em Jan/26 ainda existe. Agora relançamos com estrutura correta, criativos por avatar e rastreamento real.</div>
+      </div>
+      <div class="fase-kid" style="border-color:var(--fase2)">
+        <strong>🧒 Como uma criança entenderia:</strong> Sabe aquele carro que estava na garagem com o tanque certo, mas alguém tinha colocado gasolina errada? O Passo 1 troca o combustível. O Passo 2 dá a partida de verdade.
+      </div>
+      <div class="fase-resolves">
+        <span class="resolves-label">Resolve</span>
+        <span class="resolve-badge">Qualidade dos leads</span>
+        <span class="resolve-badge">Dashboard com dados reais</span>
+        <span class="resolve-badge">Meta com estrutura correta</span>
+      </div>
+      <div class="fase-details">
+        <div class="fase-details-inner">
+          <div class="detail-block">
+            <h4>🏗️ Estrutura de campanhas Meta: 4 campanhas separadas</h4>
+            <ul class="detail-list">
+              <li><strong>Conversão Frio: R$8.250/mês</strong> objetivo Mensagens WhatsApp, público frio por interesse, geo 15km das lojas</li>
+              <li><strong>Conversão Morno: R$5.775/mês</strong> engajadores 30d + visitantes site 60d + LAL 1%</li>
+              <li><strong>Conversão Quente: R$2.475/mês</strong> visitou site nos últimos 7 dias e abriu conversa sem avançar</li>
+              <li><strong>Awareness: R$3.300/mês</strong> nunca misturar com budget de conversão. Vídeo showroom 15 a 30s, objetivo REACH</li>
+              <li><strong>Teste: R$2.200/mês</strong> 2 novos hooks por semana. CTR acima de 1.8% escala. Abaixo pausa em 3 dias.</li>
+            </ul>
+          </div>
+          <div class="detail-block">
+            <h4>🎯 Sistema de criativos por avatar: Grid 4x4</h4>
+            <ul class="detail-list">
+              <li><strong>Reformadora:</strong> emoção no sonho do banheiro novo, benefício nos 500 modelos com entrega 72h</li>
+              <li><strong>Dono da Obra:</strong> lógica no custo-benefício e no 10x sem juros, urgência pois a obra não pode parar</li>
+              <li><strong>Arquiteto:</strong> premium com Portobello e Kohler, especificação técnica e confiança</li>
+              <li><strong>Regra:</strong> frequência passa de 2,5 e o criativo troca imediatamente. Agosto/25 provou que ignorar isso custa caro.</li>
+            </ul>
+          </div>
+          <div class="kpi-row">
+            <div class="kpi-chip kpi-orange">CPL até R$8</div>
+            <div class="kpi-chip kpi-orange">CTR acima de 1.5%</div>
+            <div class="kpi-chip kpi-orange">Frequência até 2.5</div>
+            <div class="kpi-chip kpi-orange">Avanço KOMMO acima de 20%</div>
+            <div class="kpi-chip kpi-orange">Dashboard ao vivo</div>
+          </div>
+        </div>
+      </div>
+      <div class="chevron">▼</div>
+    </div>
+    <div class="fase-spacer">
+      <div class="fase-node" style="border-color:var(--fase2);color:var(--fase2)">🚀</div>
+    </div>
+    <div class="fase-empty"></div>
+  </div>
+
+  <!-- PASSO 3 -->
+  <div class="fase">
+    <div class="fase-empty"></div>
+    <div class="fase-spacer">
+      <div class="fase-node" style="border-color:var(--fase3);color:var(--fase3)">🔍</div>
+    </div>
+    <div class="fase-content" onclick="toggle(this)">
+      <div class="fase-header">
+        <div class="fase-meta">
+          <div class="fase-tag" style="border-color:var(--fase3);color:var(--fase3)">Passo 3</div>
+          <div class="fase-timeline">Semana 4 a 6</div>
+          <div class="fase-status status-waiting">Aguardando P.2</div>
+        </div>
+        <div class="fase-title">🔍 Abra a segunda torneira</div>
+        <div class="fase-subtitle">Meta cria o desejo. Google captura quem já tomou a decisão e está buscando onde comprar. Hoje esse cliente vai para o concorrente.</div>
+      </div>
+      <div class="fase-kid" style="border-color:var(--fase3)">
+        <strong>🧒 Como uma criança entenderia:</strong> Imagina que você tem uma sorveteria. O Meta é como um cartaz bonito que desperta vontade de sorvete. O Google é quando a criança já está com fome e digita sorveteria perto de mim. Sem Google, você perde essa criança pro concorrente.
+      </div>
+      <div class="fase-resolves">
+        <span class="resolves-label">Resolve</span>
+        <span class="resolve-badge">Landing page sem conversão</span>
+        <span class="resolve-badge">Google Ads inexistente</span>
+      </div>
+      <div class="fase-details">
+        <div class="fase-details-inner">
+          <div class="detail-block">
+            <h4>🖥️ Landing Page: consertar antes de escalar</h4>
+            <ul class="detail-list">
+              <li>Instalar <strong>Microsoft Clarity</strong> gratuito: heatmap + gravação de sessão</li>
+              <li>Diagnóstico: onde o usuário para de rolar? Onde deveria clicar e não clica?</li>
+              <li>Teste A/B: CTA atual vs <em>Traga as medidas, orçamento em 30 minutos</em></li>
+              <li><strong>Regra inegociável:</strong> só escalar Google quando LP converte acima de 5%. Antes disso é CPC desperdiçado.</li>
+            </ul>
+          </div>
+          <div class="detail-block">
+            <h4>🔎 Google Ads: sequência Solutions 8 por Kasim Aslam</h4>
+            <ul class="detail-list">
+              <li><strong>Search Branded: R$600/mês</strong> palavras como vasto acabamentos e vasto pisos. Protege a marca com CPC baixo.</li>
+              <li><strong>Search Intenção: R$5.400/mês</strong> termos como loja piso zona sul SP, porcelanato brooklin e revestimento banheiro SP</li>
+              <li><strong>Display Remarketing: R$2.000/mês</strong> quem visitou o site e não converteu. Banner do showroom com a pergunta ainda procurando o piso ideal?</li>
+              <li><strong>Performance Max a partir do Mês 4:</strong> somente após 50 conversões rastreadas. Sem dados vira caixa preta cara.</li>
+            </ul>
+          </div>
+          <div class="kpi-row">
+            <div class="kpi-chip kpi-blue">LP acima de 5% de conversão</div>
+            <div class="kpi-chip kpi-blue">CPL Google até R$50</div>
+            <div class="kpi-chip kpi-blue">Quality Score acima de 7</div>
+            <div class="kpi-chip kpi-blue">ROAS visível</div>
+          </div>
+        </div>
+      </div>
+      <div class="chevron">▼</div>
+    </div>
+  </div>
+
+  <!-- PASSO 4 -->
+  <div class="fase">
+    <div class="fase-content" onclick="toggle(this)">
+      <div class="fase-header">
+        <div class="fase-meta">
+          <div class="fase-tag" style="border-color:var(--fase4);color:var(--fase4)">Passo 4</div>
+          <div class="fase-timeline">Mês 2 em diante</div>
+          <div class="fase-status status-waiting">Aguardando P.3</div>
+        </div>
+        <div class="fase-title">📣 Conte para o mundo que a Vasto existe</div>
+        <div class="fase-subtitle">Awareness sem CPV provado é custo de vaidade. Só investimos em reconhecimento de marca depois que sabemos quanto custa uma venda.</div>
+      </div>
+      <div class="fase-kid" style="border-color:var(--fase4)">
+        <strong>🧒 Como uma criança entenderia:</strong> Você só manda convites para a festa quando já tem certeza que a festa vai ser boa. Primeiro a Vasto prova que o sistema funciona e depois grita pra todo mundo na Zona Sul.
+      </div>
+      <div class="fase-resolves">
+        <span class="resolves-label">Resolve</span>
+        <span class="resolve-badge">Reconhecimento de marca</span>
+        <span class="resolve-badge">Zona Sul não conhece a Vasto</span>
+      </div>
+      <div class="fase-details">
+        <div class="fase-details-inner">
+          <div class="detail-block">
+            <h4>🗺️ Expansão geográfica em ondas</h4>
+            <ul class="detail-list">
+              <li><strong>Mês 1 e 2:</strong> raio 15km, Brooklin e entorno imediato, frequência alvo de 3 a 5 vezes por semana</li>
+              <li><strong>Mês 3:</strong> raio 25km, toda Zona Sul de SP</li>
+              <li><strong>Mês 4 em diante:</strong> São Paulo cidade com a mensagem 2 lojas no Brooklin, entrega em toda SP em 72h</li>
+              <li>Criativo de awareness: vídeo do showroom de 15 a 30 segundos, objetivo REACH, nunca misturar com budget de conversão.</li>
+            </ul>
+          </div>
+          <div class="detail-block">
+            <h4>📈 Escala: regra Ralph Burns</h4>
+            <ul class="detail-list">
+              <li>Aumentar budget no máximo <strong>20% a cada 3 dias</strong>. Nunca duplicar em bloco.</li>
+              <li>Gatilhos de escala: CPL abaixo de R$8 por 2 semanas, avanço KOMMO acima de 35% e CPV abaixo de R$200</li>
+              <li>LAL 1% de clientes que fecharam venda, audiência mais qualificada que qualquer interesse</li>
+              <li>Meta de chegada: <strong>R$2.000.000/mês de receita</strong> nas 2 lojas da Zona Sul de SP</li>
+            </ul>
+          </div>
+          <div class="kpi-row">
+            <div class="kpi-chip" style="border-color:rgba(167,139,250,0.3);color:#a78bfa;background:rgba(167,139,250,0.05)">Freq 3 a 5x por semana</div>
+            <div class="kpi-chip" style="border-color:rgba(167,139,250,0.3);color:#a78bfa;background:rgba(167,139,250,0.05)">CPV até R$200</div>
+            <div class="kpi-chip" style="border-color:rgba(167,139,250,0.3);color:#a78bfa;background:rgba(167,139,250,0.05)">ROAS acima de 3x</div>
+            <div class="kpi-chip" style="border-color:rgba(167,139,250,0.3);color:#a78bfa;background:rgba(167,139,250,0.05)">Meta R$2M/mês</div>
+          </div>
+        </div>
+      </div>
+      <div class="chevron">▼</div>
+    </div>
+    <div class="fase-spacer">
+      <div class="fase-node" style="border-color:var(--fase4);color:var(--fase4)">📣</div>
+    </div>
+    <div class="fase-empty"></div>
+  </div>
+
+</section>
+
+<!-- TABELA RESUMO -->
+<section class="budget-section summary-table-wrap">
+  <div class="budget-card">
+    <div class="budget-header" style="margin-bottom:8px">
+      <div>
+        <h3>📋 Mapa Completo: 8 Problemas, Solução e Passo</h3>
+        <p style="font-size:12px;color:var(--muted);margin-top:4px">Cada problema tem um passo responsável, uma ação concreta e uma métrica que prova que foi resolvido</p>
+      </div>
+    </div>
+    <div style="overflow-x:auto;margin-top:20px">
+      <table style="width:100%;border-collapse:collapse;font-size:13px">
+        <thead>
+          <tr style="border-bottom:2px solid #1e1e2e">
+            <th style="text-align:left;padding:10px 12px;color:var(--muted);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;font-weight:700">#</th>
+            <th style="text-align:left;padding:10px 12px;color:var(--muted);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;font-weight:700">Problema</th>
+            <th style="text-align:left;padding:10px 12px;color:var(--muted);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;font-weight:700">Passo</th>
+            <th style="text-align:left;padding:10px 12px;color:var(--muted);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;font-weight:700">Solução concreta</th>
+            <th style="text-align:left;padding:10px 12px;color:var(--muted);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;font-weight:700">Como confirmamos</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom:1px solid #1a1a28;background:rgba(248,113,113,0.02)">
+            <td style="padding:12px 12px;color:var(--muted)">1</td>
+            <td style="padding:12px 12px;color:var(--text);font-weight:600">Sem rastreamento UTM + KOMMO</td>
+            <td style="padding:12px 12px"><span style="background:rgba(248,113,113,0.1);color:#f87171;padding:3px 10px;border-radius:100px;font-size:11px;font-weight:700;white-space:nowrap">Passo 1</span></td>
+            <td style="padding:12px 12px;color:var(--muted)">Código UTM único por campanha no link do WhatsApp. KOMMO etiqueta automaticamente cada lead pela origem.</td>
+            <td style="padding:12px 12px;color:var(--muted);font-size:12px">UTM chegando em 100% dos leads no KOMMO</td>
+          </tr>
+          <tr style="border-bottom:1px solid #1a1a28;background:rgba(248,113,113,0.02)">
+            <td style="padding:12px 12px;color:var(--muted)">6</td>
+            <td style="padding:12px 12px;color:var(--text);font-weight:600">Follow-up morto: caso R$100K perdido</td>
+            <td style="padding:12px 12px"><span style="background:rgba(248,113,113,0.1);color:#f87171;padding:3px 10px;border-radius:100px;font-size:11px;font-weight:700;white-space:nowrap">Passo 1</span></td>
+            <td style="padding:12px 12px;color:var(--muted)">Protocolo A/B/C/D: lead A respondido em &lt; 5min. Anamnese de 5 perguntas obrigatória. SLA definido por grau.</td>
+            <td style="padding:12px 12px;color:var(--muted);font-size:12px">Taxa de resposta A &lt; 5min ≥ 90%</td>
+          </tr>
+          <tr style="border-bottom:1px solid #1a1a28;background:rgba(248,113,113,0.02)">
+            <td style="padding:12px 12px;color:var(--muted)">8</td>
+            <td style="padding:12px 12px;color:var(--text);font-weight:600">Desconexão Marketing ↔ Comercial</td>
+            <td style="padding:12px 12px"><span style="background:rgba(248,113,113,0.1);color:#f87171;padding:3px 10px;border-radius:100px;font-size:11px;font-weight:700;white-space:nowrap">Passo 1</span></td>
+            <td style="padding:12px 12px;color:var(--muted)">KOMMO como língua comum. Dashboard compartilhado. Reunião semanal fixa Rafael + Beatriz + Isley.</td>
+            <td style="padding:12px 12px;color:var(--muted);font-size:12px">Reunião semanal acontecendo toda semana</td>
+          </tr>
+          <tr style="border-bottom:1px solid #1a1a28;background:rgba(248,113,113,0.02)">
+            <td style="padding:12px 12px;color:var(--muted)">5</td>
+            <td style="padding:12px 12px;color:var(--text);font-weight:600">Dashboard: liderança sem visão de ROI</td>
+            <td style="padding:12px 12px"><span style="background:rgba(248,113,113,0.1);color:#f87171;padding:3px 10px;border-radius:100px;font-size:11px;font-weight:700;white-space:nowrap">Passo 1 e 2</span></td>
+            <td style="padding:12px 12px;color:var(--muted)">Estrutura criada na F.1 (Google Sheets + CAPI). Dados reais preenchidos a partir da F.2 quando Meta rodar com rastreamento.</td>
+            <td style="padding:12px 12px;color:var(--muted);font-size:12px">Dashboard enviado toda segunda antes da reunião</td>
+          </tr>
+          <tr style="border-bottom:1px solid #1a1a28;background:rgba(251,146,60,0.02)">
+            <td style="padding:12px 12px;color:var(--muted)">2</td>
+            <td style="padding:12px 12px;color:var(--text);font-weight:600">Qualidade dos leads: muita conversa, pouca compra</td>
+            <td style="padding:12px 12px"><span style="background:rgba(251,146,60,0.1);color:#fb923c;padding:3px 10px;border-radius:100px;font-size:11px;font-weight:700;white-space:nowrap">Passo 2</span></td>
+            <td style="padding:12px 12px;color:var(--muted)">Grid 4×4: 4 avatares × 4 hooks. Copy com âncora de preço e pré-qualificação. Anamnese filtra intenção no KOMMO.</td>
+            <td style="padding:12px 12px;color:var(--muted);font-size:12px">Taxa de avanço KOMMO ≥ 20% (Novo → Qualificado)</td>
+          </tr>
+          <tr style="border-bottom:1px solid #1a1a28;background:rgba(96,165,250,0.02)">
+            <td style="padding:12px 12px;color:var(--muted)">7</td>
+            <td style="padding:12px 12px;color:var(--text);font-weight:600">Landing page: Google gera clique, não lead</td>
+            <td style="padding:12px 12px"><span style="background:rgba(96,165,250,0.1);color:#60a5fa;padding:3px 10px;border-radius:100px;font-size:11px;font-weight:700;white-space:nowrap">Passo 3</span></td>
+            <td style="padding:12px 12px;color:var(--muted)">Microsoft Clarity (heatmap gratuito) + Teste A/B do CTA. Só escalar Google quando LP ≥ 5% de conversão.</td>
+            <td style="padding:12px 12px;color:var(--muted);font-size:12px">Clarity mostrando LP conversão ≥ 5%</td>
+          </tr>
+          <tr style="border-bottom:1px solid #1a1a28;background:rgba(96,165,250,0.02)">
+            <td style="padding:12px 12px;color:var(--muted)">4</td>
+            <td style="padding:12px 12px;color:var(--text);font-weight:600">Google Ads inexistente: concorrente colhe a decisão</td>
+            <td style="padding:12px 12px"><span style="background:rgba(96,165,250,0.1);color:#60a5fa;padding:3px 10px;border-radius:100px;font-size:11px;font-weight:700;white-space:nowrap">Passo 3</span></td>
+            <td style="padding:12px 12px;color:var(--muted)">Search Branded + Search Intenção + Display Remarketing. PMax somente após 50 conversões rastreadas.</td>
+            <td style="padding:12px 12px;color:var(--muted);font-size:12px">CPL Google ≤ R$50 · Quality Score ≥ 7</td>
+          </tr>
+          <tr>
+            <td style="padding:12px 12px;color:var(--muted)">3</td>
+            <td style="padding:12px 12px;color:var(--text);font-weight:600">Reconhecimento de marca: Zona Sul não conhece a Vasto</td>
+            <td style="padding:12px 12px"><span style="background:rgba(167,139,250,0.1);color:#a78bfa;padding:3px 10px;border-radius:100px;font-size:11px;font-weight:700;white-space:nowrap">Passo 4</span></td>
+            <td style="padding:12px 12px;color:var(--muted)">Awareness separado do budget de conversão. Ondas: 15km → 25km → SP cidade. Vídeo showroom 15-30s.</td>
+            <td style="padding:12px 12px;color:var(--muted);font-size:12px">Frequência 3-5x/semana no raio alvo</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="margin-top:20px;padding:14px 16px;background:var(--brand-dim);border:1px solid var(--brand-border);border-radius:10px;font-size:13px;color:var(--muted);line-height:1.6">
+      <strong style="color:var(--brand)">🧠 Lógica sênior por trás da sequência:</strong> Cada passo destrava o próximo. O Passo 1 cria os olhos da operação. O Passo 2 liga o motor com dados reais. O Passo 3 abre o segundo canal de demanda. O Passo 4 escala o que foi provado. Pular uma etapa não economiza tempo: cria retrabalho e repete os R$572K sem controle de rastreamento.
+    </div>
+  </div>
+</section>
+
+<!-- BUDGET -->
+<section class="budget-section">
+  <span class="section-label" style="padding:0 20px;display:block">investimento</span>
+  <div class="budget-card">
+    <div class="budget-header">
+      <div>
+        <h3>💰 Alocação de Budget: Passo 2 em diante</h3>
+        <p style="font-size:12px;color:var(--muted);margin-top:4px">Distribuição mensal quando Meta + Google estiverem rodando juntos</p>
+      </div>
+      <div class="budget-total">R$30.000/mês</div>
+    </div>
+    <div class="budget-bar-wrap">
+      <div class="budget-bar">
+        <div class="budget-bar-seg" style="width:27.5%;background:#f87171" title="Meta Frio"></div>
+        <div class="budget-bar-seg" style="width:19.25%;background:#fb923c" title="Meta Morno"></div>
+        <div class="budget-bar-seg" style="width:8.25%;background:#fbbf24" title="Meta Quente"></div>
+        <div class="budget-bar-seg" style="width:11%;background:#a78bfa" title="Awareness"></div>
+        <div class="budget-bar-seg" style="width:7.33%;background:#6b6b8a" title="Teste"></div>
+        <div class="budget-bar-seg" style="width:18%;background:#60a5fa" title="Google Search"></div>
+        <div class="budget-bar-seg" style="width:6.67%;background:#38bdf8" title="Google Display"></div>
+        <div class="budget-bar-seg" style="width:2%;background:#0ea5e9" title="Google Branded"></div>
+      </div>
+    </div>
+    <div class="budget-legend">
+      <div class="budget-leg-item">
+        <div class="budget-leg-dot" style="background:#f87171"></div>
+        <span style="font-size:12px;color:var(--muted)">Meta · Conversão Frio</span>
+        <span class="budget-leg-val">R$8.250</span>
+      </div>
+      <div class="budget-leg-item">
+        <div class="budget-leg-dot" style="background:#fb923c"></div>
+        <span style="font-size:12px;color:var(--muted)">Meta · Conversão Morno</span>
+        <span class="budget-leg-val">R$5.775</span>
+      </div>
+      <div class="budget-leg-item">
+        <div class="budget-leg-dot" style="background:#fbbf24"></div>
+        <span style="font-size:12px;color:var(--muted)">Meta · Conversão Quente</span>
+        <span class="budget-leg-val">R$2.475</span>
+      </div>
+      <div class="budget-leg-item">
+        <div class="budget-leg-dot" style="background:#a78bfa"></div>
+        <span style="font-size:12px;color:var(--muted)">Meta · Awareness (isolado)</span>
+        <span class="budget-leg-val">R$3.300</span>
+      </div>
+      <div class="budget-leg-item">
+        <div class="budget-leg-dot" style="background:#6b6b8a"></div>
+        <span style="font-size:12px;color:var(--muted)">Meta · Teste de criativos</span>
+        <span class="budget-leg-val">R$2.200</span>
+      </div>
+      <div class="budget-leg-item">
+        <div class="budget-leg-dot" style="background:#60a5fa"></div>
+        <span style="font-size:12px;color:var(--muted)">Google · Search Intenção</span>
+        <span class="budget-leg-val">R$5.400</span>
+      </div>
+      <div class="budget-leg-item">
+        <div class="budget-leg-dot" style="background:#38bdf8"></div>
+        <span style="font-size:12px;color:var(--muted)">Google · Display Remarketing</span>
+        <span class="budget-leg-val">R$2.000</span>
+      </div>
+      <div class="budget-leg-item">
+        <div class="budget-leg-dot" style="background:#0ea5e9"></div>
+        <span style="font-size:12px;color:var(--muted)">Google · Search Branded</span>
+        <span class="budget-leg-val">R$600</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+function toggle(el) {
+  el.classList.toggle('open');
+  const details = el.querySelector('.fase-details');
+  if (details) details.classList.toggle('open');
+}
+
+// Animar entrada dos cards
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.opacity = '1';
+      entry.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.05 });
+
+document.querySelectorAll('.fase-content, .tracker-item, .budget-card, .summary-table-wrap').forEach(el => {
+  if (el.classList.contains('open')) return; // não animar o que já está aberto
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(16px)';
+  el.style.transition = 'opacity 0.5s ease, transform 0.5s ease, border-color 0.3s, box-shadow 0.3s';
+  observer.observe(el);
+});
+</script>
+</body>
+</html>
