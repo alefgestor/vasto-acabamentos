@@ -1,0 +1,385 @@
+<title>Fechamento de Marketing · Julho 2026 · Vasto Acabamentos</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #0d0d0d;
+    --surface: #1a1a1a;
+    --surface-2: #151515;
+    --border: #2a2a2a;
+    --text: #f0f0f0;
+    --muted: #8a8a8a;
+    --faint: #5a5a5a;
+    --brand: #FFB800;
+    --brand-dim: rgba(255,184,0,0.10);
+    --brand-border: rgba(255,184,0,0.30);
+    --good: #4ade80;
+    --good-dim: rgba(74,222,128,0.10);
+    --bad: #f87171;
+    --warn: #fb923c;
+  }
+
+  html, body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+    line-height: 1.6;
+    font-size: 16px;
+  }
+  body { max-width: 100%; overflow-x: hidden; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 56px 24px 96px; }
+
+  .eyebrow {
+    display: inline-block;
+    font-size: 11px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--brand); background: var(--brand-dim); border: 1px solid var(--brand-border);
+    padding: 5px 14px; border-radius: 100px; margin-bottom: 20px;
+  }
+  h1 {
+    font-size: clamp(28px, 4.4vw, 42px); font-weight: 900; letter-spacing: -0.5px;
+    line-height: 1.15; text-wrap: balance; margin-bottom: 14px;
+  }
+  .lede { font-size: 16px; color: var(--muted); max-width: 62ch; line-height: 1.7; }
+  .meta-row { display: flex; gap: 18px; flex-wrap: wrap; margin-top: 22px; font-size: 13px; color: var(--faint); }
+  .meta-row span { display: flex; align-items: center; gap: 6px; }
+  .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--faint); flex-shrink: 0; }
+
+  section { margin-top: 64px; }
+  .section-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--brand); margin-bottom: 10px;
+  }
+  h2 { font-size: clamp(21px, 3vw, 27px); font-weight: 800; letter-spacing: -0.3px; text-wrap: balance; margin-bottom: 8px; }
+  .section-sub { font-size: 14.5px; color: var(--muted); max-width: 60ch; margin-bottom: 28px; }
+
+  .kpi-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+    background: var(--border); border: 1px solid var(--border); border-radius: 8px;
+    overflow: hidden; margin-top: 36px;
+  }
+  .kpi { background: var(--surface); padding: 22px 18px; }
+  .kpi-num {
+    font-size: clamp(22px, 3.2vw, 30px); font-weight: 900; font-variant-numeric: tabular-nums;
+    letter-spacing: -0.5px; line-height: 1; margin-bottom: 8px;
+  }
+  .kpi-num.brand { color: var(--brand); }
+  .kpi-num.good { color: var(--good); }
+  .kpi-label { font-size: 12px; color: var(--muted); line-height: 1.4; }
+
+  .table-wrap { overflow-x: auto; margin-top: 8px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  th { text-align: left; color: var(--muted); font-weight: 600; font-size: 11.5px; letter-spacing: 0.5px; text-transform: uppercase; padding: 10px 14px; border-bottom: 1px solid var(--border); }
+  td { padding: 11px 14px; border-bottom: 1px solid var(--border); font-variant-numeric: tabular-nums; }
+  tr:last-child td { border-bottom: none; }
+  td.num { text-align: right; font-weight: 600; }
+  tr.total td { border-top: 2px solid var(--border); font-weight: 700; color: var(--text); }
+
+  .trend-row { display: grid; grid-template-columns: 90px 1fr 70px 60px; align-items: center; gap: 14px; padding: 9px 0; border-bottom: 1px solid var(--border); }
+  .trend-row:last-child { border-bottom: none; }
+  .trend-label { font-size: 13px; color: var(--text); font-weight: 600; }
+  .trend-track { height: 22px; background: var(--surface-2); border-radius: 4px; overflow: hidden; }
+  .trend-fill { height: 100%; background: var(--brand); border-radius: 4px; }
+  .trend-cpl { font-size: 12.5px; color: var(--muted); text-align: right; font-variant-numeric: tabular-nums; }
+  .trend-conv { font-size: 12.5px; color: var(--text); text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+
+  .ba-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 24px 0; }
+  .ba-col { background: var(--surface); padding: 22px 20px; }
+  .ba-label { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+  .ba-num { font-size: clamp(24px, 3.4vw, 30px); font-weight: 900; font-variant-numeric: tabular-nums; line-height: 1; margin-bottom: 8px; color: var(--good); }
+  .ba-sub { font-size: 12.5px; color: var(--muted); line-height: 1.5; }
+
+  .callout {
+    padding: 16px 20px; border-radius: 6px; border: 1px solid var(--border); background: var(--surface-2);
+    font-size: 14px; color: var(--text); display: flex; gap: 12px; align-items: flex-start;
+  }
+  .callout.good { border-color: var(--good-dim); background: var(--good-dim); }
+  .callout .num { font-weight: 900; color: var(--good); font-size: 17px; font-variant-numeric: tabular-nums; flex-shrink: 0; }
+
+  .funnel { margin-top: 28px; }
+  .funnel-row { display: grid; grid-template-columns: 170px 1fr 70px; align-items: center; gap: 16px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+  .funnel-row:last-child { border-bottom: none; }
+  .funnel-stage { font-size: 13px; color: var(--text); font-weight: 600; }
+  .funnel-track { height: 26px; background: var(--surface-2); border-radius: 4px; overflow: hidden; }
+  .funnel-fill { height: 100%; background: var(--brand); border-radius: 4px; display: flex; align-items: center; padding-left: 10px; font-size: 12px; font-weight: 700; color: #0d0d0d; font-variant-numeric: tabular-nums; }
+  .funnel-fill.final { background: var(--good); }
+  .funnel-pct { font-size: 12.5px; color: var(--muted); text-align: right; font-variant-numeric: tabular-nums; }
+
+  .synthesis { margin-top: 64px; padding: 32px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; }
+  .synthesis h2 { color: var(--brand); }
+  .synth-line { display: flex; gap: 12px; padding: 10px 0; font-size: 14.5px; line-height: 1.6; }
+  .synth-line .mark { flex-shrink: 0; font-weight: 900; width: 20px; color: var(--good); }
+  .synth-final { margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--border); font-size: 16px; font-weight: 700; color: var(--text); line-height: 1.5; }
+
+  .next-list { list-style: none; margin-top: 8px; }
+  .next-list li { padding: 10px 0 10px 26px; border-bottom: 1px solid var(--border); font-size: 14px; color: var(--text); position: relative; line-height: 1.5; }
+  .next-list li:last-child { border-bottom: none; }
+  .next-list li::before { content: '→'; position: absolute; left: 0; color: var(--brand); font-weight: 700; }
+
+  .action {
+    margin-top: 16px; padding: 12px 16px; border-radius: 6px;
+    background: var(--surface-2); border-left: 3px solid var(--brand);
+    font-size: 13.5px; color: var(--text); line-height: 1.6;
+  }
+  .action strong { color: var(--brand); }
+
+  footer { margin-top: 72px; padding-top: 20px; border-top: 1px solid var(--border); font-size: 12px; color: var(--faint); }
+
+  @media (max-width: 640px) {
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    .ba-grid { grid-template-columns: 1fr; }
+    .funnel-row { grid-template-columns: 100px 1fr 50px; gap: 10px; }
+    .trend-row { grid-template-columns: 60px 1fr 55px 50px; gap: 8px; }
+  }
+</style>
+
+<div class="wrap">
+
+  <div class="eyebrow">Vasto Acabamentos · Fechamento de Marketing</div>
+  <h1>Julho 2026: meta batida, custo em queda, dado confiável</h1>
+  <p class="lede">Fechamento do mês de tráfego pago para o WhatsApp da Vasto: o que o marketing investiu, gerou e a que custo.</p>
+  <div class="meta-row">
+    <span><span class="dot"></span>1 a 31 de julho de 2026</span>
+    <span><span class="dot"></span>Campanhas [VASTO] em Meta Ads e Google Ads</span>
+    <span><span class="dot"></span>Fontes: API Meta Ads + API KOMMO + Google Ads</span>
+  </div>
+
+  <section>
+    <div class="section-label">Resumo do investimento total</div>
+    <h2>Quanto saiu do bolso no mês, em qualquer canal e finalidade</h2>
+    <div class="ba-grid">
+      <div class="ba-col">
+        <div class="ba-label">Geração de demanda (Meta + Google)</div>
+        <div class="ba-num">R$43.044</div>
+        <div class="ba-sub">soma das campanhas de vendas nos dois canais, o número que importa pra performance</div>
+      </div>
+      <div class="ba-col">
+        <div class="ba-label">Total geral [VASTO] no mês</div>
+        <div class="ba-num">R$46.701</div>
+        <div class="ba-sub">inclui também reconhecimento de marca e a campanha de recrutamento</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">01 · Por que confiar nesses números</div>
+    <h2>Rastreamento com 103,2% de correspondência no mês inteiro</h2>
+    <p class="section-sub">Antes de qualquer resultado: a prova de que o dado abaixo é confiável. Comparamos o volume de conversas que o Meta Ads reportou (campanhas de vendas) com o volume de leads que o KOMMO efetivamente registrou como origem paga, dia a dia.</p>
+
+    <div class="ba-grid">
+      <div class="ba-col">
+        <div class="ba-label">Conversas reportadas (Meta)</div>
+        <div class="ba-num">3.590</div>
+        <div class="ba-sub">via campanhas de vendas [VASTO]</div>
+      </div>
+      <div class="ba-col">
+        <div class="ba-label">Leads etiquetados (KOMMO)</div>
+        <div class="ba-num">3.706</div>
+        <div class="ba-sub">com Origem "Meta Pago" corretamente identificada</div>
+      </div>
+    </div>
+    <div class="callout good">
+      <div class="num">103,2%</div>
+      <div>de correspondência entre as duas fontes no mês inteiro. Todos os números deste documento podem ser lidos com confiança, sem viés de atribuição.</div>
+    </div>
+
+    <p class="section-sub" style="margin-top:20px;margin-bottom:10px">Por que o número passa de 100%: o Meta atribui a conversa ao dia do clique no anúncio (janela de até 7 dias), e o KOMMO registra o lead no dia que a mensagem chega de fato no WhatsApp. Quem clica no fim de um dia e só manda mensagem no dia seguinte cria essa pequena variação, pra cima ou pra baixo, dia a dia. No mês fechado, isso não passa de ruído normal de atribuição.</p>
+
+    <p class="section-sub" style="margin-bottom:28px">As duas colunas do Google estão aqui só pra visão do canal, dia a dia. Elas não entram no cálculo de correspondência: como o número de WhatsApp é o mesmo usado pelo Meta, o rastreamento do Google não tem como ser validado da mesma forma, e a diferença entre as duas colunas (420 cliques contra 15 leads etiquetados) é exatamente esse ponto cego (ver seção 05).</p>
+
+    <div class="table-wrap">
+      <table>
+        <tr><th>Data</th><th style="text-align:right">Conversas (Meta)</th><th style="text-align:right">Leads Meta (KOMMO)</th><th style="text-align:right">Cliques WhatsApp (Google)</th><th style="text-align:right">Leads Google (KOMMO)</th><th style="text-align:right">Correspondência (KOMMO ÷ Meta)</th></tr>
+        <tr><td>01/07</td><td class="num">46</td><td class="num">54</td><td class="num">41</td><td class="num">0</td><td class="num">117,4%</td></tr>
+        <tr><td>02/07</td><td class="num">121</td><td class="num">85</td><td class="num">37</td><td class="num">0</td><td class="num">70,2%</td></tr>
+        <tr><td>03/07</td><td class="num">155</td><td class="num">157</td><td class="num">0</td><td class="num">0</td><td class="num">101,3%</td></tr>
+        <tr><td>04/07</td><td class="num">142</td><td class="num">140</td><td class="num">0</td><td class="num">0</td><td class="num">98,6%</td></tr>
+        <tr><td>05/07</td><td class="num">99</td><td class="num">102</td><td class="num">0</td><td class="num">0</td><td class="num">103,0%</td></tr>
+        <tr><td>06/07</td><td class="num">111</td><td class="num">99</td><td class="num">1</td><td class="num">0</td><td class="num">89,2%</td></tr>
+        <tr><td>07/07</td><td class="num">178</td><td class="num">149</td><td class="num">8</td><td class="num">0</td><td class="num">83,7%</td></tr>
+        <tr><td>08/07</td><td class="num">139</td><td class="num">145</td><td class="num">7</td><td class="num">0</td><td class="num">104,3%</td></tr>
+        <tr><td>09/07</td><td class="num">135</td><td class="num">120</td><td class="num">4</td><td class="num">0</td><td class="num">88,9%</td></tr>
+        <tr><td>10/07</td><td class="num">107</td><td class="num">111</td><td class="num">4</td><td class="num">0</td><td class="num">103,7%</td></tr>
+        <tr><td>11/07</td><td class="num">152</td><td class="num">131</td><td class="num">6</td><td class="num">0</td><td class="num">86,2%</td></tr>
+        <tr><td>12/07</td><td class="num">155</td><td class="num">152</td><td class="num">11</td><td class="num">0</td><td class="num">98,1%</td></tr>
+        <tr><td>13/07</td><td class="num">94</td><td class="num">105</td><td class="num">10</td><td class="num">0</td><td class="num">111,7%</td></tr>
+        <tr><td>14/07</td><td class="num">117</td><td class="num">108</td><td class="num">11</td><td class="num">1</td><td class="num">92,3%</td></tr>
+        <tr><td>15/07</td><td class="num">119</td><td class="num">119</td><td class="num">7</td><td class="num">2</td><td class="num">100,0%</td></tr>
+        <tr><td>16/07</td><td class="num">102</td><td class="num">115</td><td class="num">12</td><td class="num">0</td><td class="num">112,7%</td></tr>
+        <tr><td>17/07</td><td class="num">98</td><td class="num">112</td><td class="num">11</td><td class="num">2</td><td class="num">114,3%</td></tr>
+        <tr><td>18/07</td><td class="num">94</td><td class="num">105</td><td class="num">5</td><td class="num">0</td><td class="num">111,7%</td></tr>
+        <tr><td>19/07</td><td class="num">81</td><td class="num">88</td><td class="num">8</td><td class="num">0</td><td class="num">108,6%</td></tr>
+        <tr><td>20/07</td><td class="num">89</td><td class="num">115</td><td class="num">23</td><td class="num">0</td><td class="num">129,2%</td></tr>
+        <tr><td>21/07</td><td class="num">139</td><td class="num">140</td><td class="num">24</td><td class="num">3</td><td class="num">100,7%</td></tr>
+        <tr><td>22/07</td><td class="num">157</td><td class="num">156</td><td class="num">18</td><td class="num">0</td><td class="num">99,4%</td></tr>
+        <tr><td>23/07</td><td class="num">133</td><td class="num">142</td><td class="num">24</td><td class="num">1</td><td class="num">106,8%</td></tr>
+        <tr><td>24/07</td><td class="num">107</td><td class="num">133</td><td class="num">22</td><td class="num">1</td><td class="num">124,3%</td></tr>
+        <tr><td>25/07</td><td class="num">112</td><td class="num">124</td><td class="num">18</td><td class="num">2</td><td class="num">110,7%</td></tr>
+        <tr><td>26/07</td><td class="num">89</td><td class="num">103</td><td class="num">14</td><td class="num">1</td><td class="num">115,7%</td></tr>
+        <tr><td>27/07</td><td class="num">159</td><td class="num">154</td><td class="num">18</td><td class="num">1</td><td class="num">96,9%</td></tr>
+        <tr><td>28/07</td><td class="num">114</td><td class="num">145</td><td class="num">12</td><td class="num">0</td><td class="num">127,2%</td></tr>
+        <tr><td>29/07</td><td class="num">89</td><td class="num">105</td><td class="num">14</td><td class="num">0</td><td class="num">118,0%</td></tr>
+        <tr><td>30/07</td><td class="num">76</td><td class="num">95</td><td class="num">25</td><td class="num">1</td><td class="num">125,0%</td></tr>
+        <tr><td>31/07</td><td class="num">81</td><td class="num">97</td><td class="num">25</td><td class="num">0</td><td class="num">119,8%</td></tr>
+        <tr class="total"><td>Total</td><td class="num">3.590</td><td class="num">3.706</td><td class="num">420</td><td class="num">15</td><td class="num">103,2%</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">02 · O resultado do mês</div>
+    <h2>Meta batida em 120%, com custo abaixo do combinado</h2>
+    <div class="kpi-grid">
+      <div class="kpi">
+        <div class="kpi-num brand">R$39.442</div>
+        <div class="kpi-label">investido no mês em campanhas de vendas [VASTO]</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-num brand">3.590</div>
+        <div class="kpi-label">conversas de WhatsApp geradas (meta do mês: 3.000)</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-num good">R$10,99</div>
+        <div class="kpi-label">CPL real do mês (benchmark do setor: R$15 a R$35)</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-num good">120%</div>
+        <div class="kpi-label">da meta mensal de conversas, batida com 3 dias de sobra</div>
+      </div>
+    </div>
+    <div class="action"><strong>Ação recomendada:</strong> orçamento atual está gerando volume acima da meta com custo abaixo do benchmark do setor. Há margem pra decidir entre escalar investimento ou manter o ritmo e redirecionar o excedente de orçamento.</div>
+  </section>
+
+  <section>
+    <div class="section-label">03 · Tendência</div>
+    <h2>Custo por lead caiu ao longo do mês</h2>
+    <p class="section-sub">Gasto, conversas e CPL por semana. Não é só o total do mês que importa, é a direção: o custo está melhorando ou piorando?</p>
+
+    <div class="funnel">
+      <div class="trend-row">
+        <div class="trend-label">Sem. 1 (1-7/07)</div>
+        <div class="trend-track"><div class="trend-fill" style="width:100%"></div></div>
+        <div class="trend-conv">852 conv.</div>
+        <div class="trend-cpl">R$11,61</div>
+      </div>
+      <div class="trend-row">
+        <div class="trend-label">Sem. 2 (8-14/07)</div>
+        <div class="trend-track"><div class="trend-fill" style="width:100.8%"></div></div>
+        <div class="trend-conv">899 conv.</div>
+        <div class="trend-cpl">R$12,53</div>
+      </div>
+      <div class="trend-row">
+        <div class="trend-label">Sem. 3 (15-21/07)</div>
+        <div class="trend-track"><div class="trend-fill" style="width:69.6%"></div></div>
+        <div class="trend-conv">722 conv.</div>
+        <div class="trend-cpl">R$10,76</div>
+      </div>
+      <div class="trend-row">
+        <div class="trend-label">Sem. 4 (22-28/07)</div>
+        <div class="trend-track"><div class="trend-fill" style="width:78.5%"></div></div>
+        <div class="trend-conv">871 conv.</div>
+        <div class="trend-cpl">R$10,06</div>
+      </div>
+      <div class="trend-row">
+        <div class="trend-label">Sem. 5 (29-31/07)</div>
+        <div class="trend-track"><div class="trend-fill" style="width:15.8%"></div></div>
+        <div class="trend-conv">246 conv.</div>
+        <div class="trend-cpl">R$7,15</div>
+      </div>
+    </div>
+    <div class="action"><strong>Ação recomendada:</strong> a curva é de melhora, não de acaso (CPL caiu de R$12,53 na semana 2 pra R$7,15 no fim do mês). Manter os públicos e criativos atuais no início de agosto antes de testar qualquer mudança grande, pra não perder essa tendência.</div>
+  </section>
+
+  <section>
+    <div class="section-label">04 · Contribuição por campanha</div>
+    <h2>Todas as campanhas [VASTO] com gasto em julho</h2>
+    <p class="section-sub">Extrato completo, incluindo campanhas que não são de vendas, pra transparência total do investimento sob a tag [VASTO].</p>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Campanha</th><th style="text-align:right">Gasto</th><th style="text-align:right">Conversas</th><th style="text-align:right">CPL</th></tr>
+        <tr>
+          <td>Conversões no WhatsApp Vasto <span style="color:var(--muted)">(vendas)</span></td>
+          <td class="num">R$38.534,93</td>
+          <td class="num">3.537</td>
+          <td class="num">R$10,89</td>
+        </tr>
+        <tr>
+          <td>Conversões no WhatsApp Vasto 02 <span style="color:var(--muted)">(vendas, WhatsApp)</span></td>
+          <td class="num">R$906,72</td>
+          <td class="num">53</td>
+          <td class="num">R$17,11</td>
+        </tr>
+        <tr class="total">
+          <td>Subtotal vendas</td>
+          <td class="num">R$39.441,65</td>
+          <td class="num">3.590</td>
+          <td class="num">R$10,99</td>
+        </tr>
+        <tr>
+          <td>Distribuição de Conteúdo Vasto <span style="color:var(--muted)">(reconhecimento)</span></td>
+          <td class="num">R$2.814,48</td>
+          <td class="num">3</td>
+          <td class="num">CPM R$4,55</td>
+        </tr>
+        <tr>
+          <td>Caminhões Vuc para Vasto <span style="color:var(--muted)">(recrutamento, não é venda)</span></td>
+          <td class="num">R$842,12</td>
+          <td class="num">4</td>
+          <td class="num">não se aplica</td>
+        </tr>
+        <tr class="total">
+          <td>Total geral [VASTO] em julho</td>
+          <td class="num">R$43.098,25</td>
+          <td class="num">-</td>
+          <td class="num">-</td>
+        </tr>
+      </table>
+    </div>
+    <p class="section-sub" style="margin-top:16px;margin-bottom:0">A campanha de reconhecimento não é medida por conversa (CPM de R$4,55 com mais de 618 mil impressões é o resultado esperado). A campanha "Caminhões Vuc para Vasto" é vaga de emprego (motorista), não geração de demanda de vendas: está incluída aqui só pra transparência total do gasto sob a tag [VASTO], hoje pausada.</p>
+    <div class="action"><strong>Ação recomendada:</strong> concentrar qualquer aumento de orçamento nas duas campanhas de vendas, que juntas provam eficiência em escala (3.590 conversas a R$10,99). Reavaliar se a campanha "Caminhões Vuc para Vasto" deve continuar sob a tag [VASTO] ou migrar pra um centro de custo de RH.</div>
+  </section>
+
+  <section>
+    <div class="section-label">05 · Google Ads</div>
+    <h2>Segundo canal ativo, pequeno mas rentável</h2>
+    <p class="section-sub">Campanha de busca ativa em julho, direcionada pra landing page da Vasto por termo de pesquisa ("pisos"). Uma segunda campanha de busca (termo "Vasto Acabamentos") ficou pausada o mês inteiro, sem gasto.</p>
+
+    <div class="kpi-grid">
+      <div class="kpi">
+        <div class="kpi-num brand">R$3.602,61</div>
+        <div class="kpi-label">investido em julho na campanha de busca ativa</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-num brand">1.290</div>
+        <div class="kpi-label">cliques na landing page</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-num good">420</div>
+        <div class="kpi-label">cliques no botão de WhatsApp rastreados (32,6% dos cliques)</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-num good">R$8,58</div>
+        <div class="kpi-label">custo por clique no WhatsApp</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="num">15</div>
+      <div>leads aparecem etiquetados "Google Pago" no KOMMO em julho, bem abaixo das 420 conversões que o Google reporta. Diferente do Meta, o rastreamento do Google depende de um código sobreviver na mensagem de WhatsApp que o cliente manda, e frequentemente não sobrevive: o número confiável de performance desse canal é o do próprio Google Ads, não a contagem no KOMMO.</div>
+    </div>
+
+    <div class="action"><strong>Ação recomendada:</strong> R$8,58 por clique de WhatsApp é um custo saudável e o canal ainda é pequeno perto do Meta (8% do investimento total). Vale um teste de aumento de orçamento nessa campanha específica, medindo pelo próprio Google Ads, não pelo volume no KOMMO.</div>
+  </section>
+
+  <div class="synthesis">
+    <div class="section-label">Decisão pra agosto</div>
+    <h2>O que fazer com esse resultado, não só o que aconteceu</h2>
+    <div class="synth-line"><span class="mark">✓</span><span>Meta de 3.000 conversas batida em 120% (3.590 entregues), com dado 103,2% confiável</span></div>
+    <div class="synth-line"><span class="mark">✓</span><span>CPL fechou em R$10,99, e a tendência de queda (R$12,53 → R$7,15) marca o mês inteiro</span></div>
+    <div class="synth-line"><span class="mark">✓</span><span>A eficiência vem de duas campanhas comprovadas, sem necessidade de testar novos formatos agora</span></div>
+    <div class="synth-line"><span class="mark">✓</span><span>Google Ads soma R$3.602,61 e 420 cliques de WhatsApp a R$8,58 cada, canal pequeno mas com espaço claro pra crescer</span></div>
+    <div class="synth-final">A decisão real pra agosto é: escalar o orçamento das campanhas de vendas no Meta enquanto o CPL segue em queda, testar aumento de orçamento no Google Ads (ainda pequeno perto do potencial), ou manter o ritmo atual e redirecionar o excedente. A única decisão errada é não decidir e deixar o orçamento igual sem revisão.</div>
+  </div>
+
+  <footer>Vasto Acabamentos · Fechamento de Marketing · Julho 2026 · Dados extraídos via API Meta Ads e API KOMMO em 03/08/2026</footer>
+
+</div>
